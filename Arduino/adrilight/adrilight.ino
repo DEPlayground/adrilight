@@ -60,6 +60,8 @@ void processIncomingData()
 {
   if (waitForPreamble(TIMEOUT))
   {
+    int blankLeds = 0;
+
     for (int ledNum = 0; ledNum < NUM_LEDS+1; ledNum++)
     {
       //we always have to read 3 bytes (RGB!)
@@ -73,6 +75,13 @@ void processIncomingData()
         byte green = buffer[1];
         byte red = buffer[2];
         ledsTemp[ledNum] = CRGB(red, green, blue);
+
+        // count all leds with luminance greater than 125
+        // (it's a unsaturated color, near white)
+        if(ledsTemp[ledNum].getLuma() > 125)
+        {
+          blankLeds += 1;
+        }
       }
       else if (ledNum == NUM_LEDS)
       {
@@ -87,8 +96,15 @@ void processIncomingData()
           {
             leds[ledNum]=ledsTemp[ledNum];
           }
-      
-          if (currentBrightness < BRIGHTNESS)
+
+          // how much "near white" leds must be on
+          // to start reducing the brightness.
+          if(blankLeds >= 25)
+          {
+            if(currentBrightness > 0) currentBrightness--;
+            FastLED.setBrightness(currentBrightness);
+          }
+          else if (currentBrightness < BRIGHTNESS)
           {
             currentBrightness++;
             FastLED.setBrightness(currentBrightness);
