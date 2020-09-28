@@ -13,7 +13,7 @@
 #define MODE_ANIMATION 0
 #define MODE_AMBILIGHT 1
 #define MODE_BLACK 2
-uint8_t mode = MODE_ANIMATION;
+uint8_t mode = MODE_BLACK;
 
 uint8_t currentBrightness = BRIGHTNESS;
 byte MESSAGE_PREAMBLE[] = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09 };
