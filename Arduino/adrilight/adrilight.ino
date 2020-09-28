@@ -8,7 +8,7 @@
 // NO CHANGE REQUIRED BELOW THIS LINE
 // --------------------------------------------------------------------------------------------
 
-#define UPDATES_PER_SECOND 60
+#define UPDATES_PER_SECOND 75
 #define TIMEOUT 3000
 #define MODE_ANIMATION 0
 #define MODE_AMBILIGHT 1
